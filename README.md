@@ -44,3 +44,13 @@ python -m src.service.send_example --csv data/sign_mnist_test.csv --index 0 --ur
 ```
 
 The service accepts base64-encoded images in JSON (`{"image_base64": "..."}`) and returns `{class_index, letter, confidence}`. Use curl/requests with webcam captures or saved images to integrate with other clients.
+
+### Webcam streaming client
+
+Run the webcam overlay (press `q` to exit):
+
+```powershell
+python -m src.service.webcam_client --camera 0 --url http://127.0.0.1:8000/predict
+```
+
+Each frame is resized to 28×28, sent to the REST endpoint, and the returned letter/confidence is rendered on the video feed. Point `--url` to the EC2 endpoint when the service runs remotely.
