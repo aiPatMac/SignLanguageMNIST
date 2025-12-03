@@ -1,6 +1,6 @@
-# Sign Language MNIST
+# Sign Language MNIST – Lightning + LitServe
 
-Modular training stack for the Sign Language MNIST dataset covering Lightning training, Weights & Biases monitoring, and Optuna-based hyper-parameter optimization.
+Compact training + serving workflow for Sign Language MNIST built with PyTorch Lightning, W&B logging, Optuna tuning, and LitServe for deployment.
 
 ## Environment setup
 
@@ -18,10 +18,10 @@ If you plan to log to Weights & Biases, set `WANDB_API_KEY` in your shell or cre
 python -m src.train --batch-size 128 --max-epochs 15 --monitoring-mode online
 ```
 
-Helpful flags:
-- `--monitoring-mode {online,offline,disabled}`: control W&B usage (falls back to CSV logs when disabled/offline).
-- `--fast-dev-run`: single-batch smoke test for debugging.
-- `--output-dir`: where checkpoints/metrics are stored.
+Helpful overrides:
+- `--monitoring-mode {online,offline,disabled}` toggles W&B.
+- `--fast-dev-run` runs 1 batch for sanity checks.
+- `--lr`, `--weight-decay`, `--dropout`, `--width-scale`, `--augment` let you replay Optuna findings.
 
 ## Hyper-parameter optimization
 
@@ -29,4 +29,18 @@ Helpful flags:
 python -m src.hpo_optuna --trials 20 --max-epochs 8 --output-dir outputs/hpo
 ```
 
-The script searches key knobs (learning rate, dropout, width, batch size, augmentation flag) with Optuna + Lightning’s pruning callback. Final parameters are written to `outputs/hpo/best_params.txt`.
+## Serving (LitServe REST API)
+
+Start the API (defaults to the best checkpoint path, port 8000):
+
+```powershell
+python -m src.service.lit_server --host 0.0.0.0 --port 8000
+```
+
+Send a sample request taken from the dataset:
+
+```powershell
+python -m src.service.send_example --csv data/sign_mnist_test.csv --index 0 --url http://127.0.0.1:8000/predict
+```
+
+The service accepts base64-encoded images in JSON (`{"image_base64": "..."}`) and returns `{class_index, letter, confidence}`. Use curl/requests with webcam captures or saved images to integrate with other clients.
