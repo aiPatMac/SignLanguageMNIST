@@ -16,7 +16,7 @@ from src.config import ExperimentConfig
 from src.models.sign_classifier import SignClassifier
 
 DEFAULT_CKPT = Path(
-    "outputs/sign-mnist-lightning/v9nw7x13/checkpoints/sign-mnist-11-0.999.ckpt"
+    "outputs/sign-mnist-lightning/tmggzfkj/checkpoints/sign-mnist-12-0.077.ckpt"
 )
 DEFAULT_WIDTH_SCALE = 0.75
 DEFAULT_DROPOUT = 0.31539834816417345

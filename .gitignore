@@ -31,3 +31,6 @@ Thumbs.db
 # Optuna studies and reports
 *.db
 reports/
+
+# AWS
+*.pem
