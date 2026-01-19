@@ -34,7 +34,7 @@ class ModelConfig:
     in_channels: int = 1
     num_classes: int = 24
     dropout: float = 0.2
-    hidden_channels: tuple[int, int, int] = (32, 64, 128)
+    hidden_channels: tuple[int, int, int] = (8, 16, 32)
 
 
 @dataclass(slots=True)

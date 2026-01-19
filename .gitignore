@@ -34,3 +34,5 @@ reports/
 
 # AWS
 *.pem
+ssh/ssh_config
+.env
