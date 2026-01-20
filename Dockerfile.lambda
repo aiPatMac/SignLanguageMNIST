@@ -1,0 +1,18 @@
+FROM public.ecr.aws/lambda/python:3.11
+
+RUN yum update -y && \
+    yum install -y gcc gcc-c++ make && \
+    yum clean all
+
+COPY requirements_lambda.txt .
+RUN pip install --no-cache-dir -r requirements_lambda.txt
+
+COPY src/ ${LAMBDA_TASK_ROOT}/src/
+
+RUN touch ${LAMBDA_TASK_ROOT}/src/__init__.py
+
+COPY models/toy_model.ckpt ${LAMBDA_TASK_ROOT}/models/toy_model.ckpt
+
+ENV PYTHONPATH=${LAMBDA_TASK_ROOT}
+
+CMD [ "src.service.lambda_handler.handler" ]
