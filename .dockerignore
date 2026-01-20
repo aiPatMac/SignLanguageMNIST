@@ -1,0 +1,16 @@
+.venv/
+venv/
+env/
+
+outputs/
+data/
+logs/
+
+.git/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+
+Dockerfile*
+.dockerignore

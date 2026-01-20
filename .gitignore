@@ -31,3 +31,8 @@ Thumbs.db
 # Optuna studies and reports
 *.db
 reports/
+
+# AWS
+*.pem
+ssh/ssh_config
+.env
